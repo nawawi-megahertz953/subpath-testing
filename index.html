@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path and Subpath Example</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main Page Content -->
+    <div id="mainPage" class="page">
+        <h1>Welcome to the Main Page</h1>
+        <p>This is the main page. Click the button to navigate to the subpath page.</p>
+        <button onclick="showSubpath()">Go to Subpath</button>
+    </div>
+
+    <!-- Subpath Page Content -->
+    <div id="subpathPage" class="page hidden">
+        <h1>Welcome to the Subpath Page</h1>
+        <p>This is the subpath page. Click the button to go back to the main page.</p>
+        <button onclick="showMainPage()">Go Back to Main Page</button>
+    </div>
+
+    <script>
+        // Function to show the subpath page and simulate a redirect
+        function showSubpath() {
+            document.getElementById("mainPage").classList.add("hidden");
+            document.getElementById("subpathPage").classList.remove("hidden");
+            window.history.pushState({}, "", "/subpath");  // Simulates redirect to /subpath
+        }
+
+        // Function to show the main page and simulate a redirect back
+        function showMainPage() {
+            document.getElementById("mainPage").classList.remove("hidden");
+            document.getElementById("subpathPage").classList.add("hidden");
+            window.history.pushState({}, "", "/");  // Simulates redirect to root path
+        }
+
+        // Load the correct page based on the current URL path
+        window.onload = function() {
+            if (window.location.pathname === "/subpath") {
+                showSubpath();  // Show subpath page if URL is /subpath
+            } else {
+                showMainPage();  // Default to main page
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .page:not(.hidden) {
+            display: block;
+        }
+    </style>
+</body>
+</html>
